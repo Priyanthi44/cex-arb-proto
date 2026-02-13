@@ -3,7 +3,8 @@ import random
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
+
 
 def run_once(script_path: str) -> int:
     # Use the current venv's python to run the monitor script
@@ -24,13 +25,15 @@ def main():
 
     run_idx = 0
     while True:
-       run_idx += 1
-        started = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+        run_idx += 1
+        started = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S %Z")
+
+
         print(f"[run_forever] run #{run_idx} start {started}")
 
         try:
             rc = run_once(args.script)
-            ended = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+            ended = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S %Z")
             if rc == 0:
                 print(f"[run_forever] run #{run_idx} OK ({ended})\n")
             else:

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kraken↔Binance Dislocation Monitor</title>
+  <style>
+    body{font-family: -apple-system,system-ui,Segoe UI,Roboto,Arial; max-width: 860px; margin: 40px auto; padding: 0 16px; line-height: 1.4;}
+    .card{border:1px solid #e5e5e5; border-radius:12px; padding:18px; margin:14px 0;}
+    .row{display:flex; gap:12px; flex-wrap:wrap;}
+    .btn{display:inline-block; padding:12px 14px; border-radius:10px; text-decoration:none; border:1px solid #111; color:#111; font-weight:600;}
+    .btn.primary{background:#111; color:#fff;}
+    small{color:#666;}
+    code{background:#f4f4f4; padding:2px 6px; border-radius:6px;}
+  </style>
+</head>
+<body>
+  <h1>Kraken↔Binance Market Anomaly Monitor</h1>
+  <p><b>Not an arb bot.</b> A real-time monitoring tool that surfaces cross-exchange dislocations and market-quality events, ed by execution feasibility.</p>
+
+  <div class="card">
+    <h2>What you get</h2>
+    <ul>
+      <li><b>Top dislocations now</b> (Kraken vs Binance), ranked and updated continuously</li>
+      <li><b>Market-quality alerts</b>: spread spikes, staleness, liquidity warnings (as available)</li>
+      <li><b>Explainable alerts</b>: gap %, spreads, freshness/TTL, confidence</li>
+      <li><b>Audit logs</b>: historical snapshots in a database for review</li>
+      <li><b>Delivery</b>: Telegram / Discord / webhook</li>
+    </ul>
+    <small>Designed to reduce noise and avoid “ghost opportunities” caused by fees/spread/stale data.</small>
+  </div>
+
+  <div class="card">
+    <h2>Pilot pricing</h2>
+    <div class="row">
+      <div class="card" style="flex:1; min-width:260px;">
+        <h3>Trader Pilot</h3>
+        <p><b>£199/month</b> — 1 seat</p>
+        <ul>
+          <li>Top 30–50 assets</li>
+          <li>Telegram OR Discord alerts</li>
+          <li>Custom thresholds</li>
+        </ul>
+        <a class="btn href="REPLACE_WITH_STRIPE_LINK_TRADER">Start Trader Pilot</a>
+      </div>
+      <div class="card" style="flex:1; min-width:260px;">
+        <h3>Desk Pilot</h3>
+        <p><b>£499/month</b> — up to 3 seats</p>
+        <ul>
+          <li>Top 100 assets</li>
+          <li>Webhook + alerts</li>
+          <li>Priority tuning support</li>
+        </ul>
+        <a class="btn primary" href="REPLACE_WITH_STRIPE_LINK_DESK">Start Desk Pilot</a>
+      </div>
+    </div>
+    <p><small>Cancel anytime. No profit promises. This is monitoring + execution-feasibility context.</small></p>
+  </div>
+
+  <div class="card">
+    <h2>Want a 48-hour demo?</h2>
+    <p>Reply with your preferred channel: <code>Telegram</code> or <code>Discord</code> and your asset universe (e.g., top 30).</p>
+    <p><small>Contact: your email / DM</small></p>
+  </div>
+</body>
+</html>
