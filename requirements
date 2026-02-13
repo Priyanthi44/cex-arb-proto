@@ -3,3 +3,5 @@ ccxt>=4.5.37
 
 # Nice-to-have (optional but useful)
 pandas>=2.0.0
+
+streamlit>=1.30.0
