@@ -90,15 +90,19 @@ def build_edges_from_orderbooks(ex, symbols, trade_size_quote):
 
 def best_triangles(edges, assets):
     res = []
+    checked = 0
     for A in assets:
         for B, rAB in edges.get(A, {}).items():
             for C, rBC in edges.get(B, {}).items():
                 rCA = edges.get(C, {}).get(A)
                 if not rCA:
                     continue
+                checked += 1
                 final = rAB * rBC * rCA
                 profit_pct = (final - 1.0) * 100.0
                 res.append((profit_pct, A, B, C, final))
+    print(f"triangles_checked={checked} triangles_kept={len(res)}")
+    print(f"triangles_found={len(res)}")
     res.sort(reverse=True, key=lambda x: x[0])
     return res
 

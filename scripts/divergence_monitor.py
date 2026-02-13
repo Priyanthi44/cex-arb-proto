@@ -56,6 +56,10 @@ def main():
     ex_objs = {}
     tickers = {}
     market_maps = {}
+    rows = []
+    ts = int(time.time() * 1000)
+    conn = connect()
+    print("DB ready:", "data/market.db")
 
     for eid in EXCHANGES:
         ex = getattr(ccxt, eid)({"enableRateLimit": True})
@@ -64,7 +68,7 @@ def main():
         market_maps[eid] = normalize_markets(ex)
         tickers[eid] = safe_fetch_tickers(ex)
         tick_rows = []
-        ts = int(time.time() * 1000)
+        
         for (base, quote), sym in list(market_maps[eid].items())[:500]:
             t = tickers[eid].get(sym)
             if not t:
@@ -86,9 +90,7 @@ def main():
     for eid in EXCHANGES[1:]:
         common &= set(market_maps[eid].keys())
 
-    rows = []
-    ts = int(time.time() * 1000)
-    conn = connect()
+    
 
     a, b = EXCHANGES[0], EXCHANGES[1]
     for (base, quote) in common:
@@ -122,6 +124,27 @@ def main():
         })
 
     rows.sort(key=lambda r: r["div_pct"], reverse=True)
+    if rows and rows[0]["div_pct"] > 0.3:
+        msg = f'TOP divergence {rows[0]["pair"]}: {rows[0]["div_pct"]:.3f}% ({a} vs {b})'
+        insert_alert(conn, ts, "divergence", "high", msg)
+        conn.commit()
+
+
+    div_rows = []
+    for r in rows:
+        div_rows.append((
+            r["ts_ms"],
+            r["pair"],
+            a, b,
+            r[f"{a}_mid"],
+            r[f"{b}_mid"],
+            r["div_pct"],
+            r[f"{a}_spread_bps"],
+            r[f"{b}_spread_bps"],
+        ))
+
+    insert_divergences(conn, div_rows)
+    conn.commit()
 
     print(f"\nCommon pairs={len(rows)} | Top {TOP_N} divergences ({a} vs {b}):")
     for r in rows[:TOP_N]:

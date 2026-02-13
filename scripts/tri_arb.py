@@ -64,17 +64,23 @@ def prune(edges, top_k):
 
 def best_triangles(edges, assets, min_profit_pct):
     res = []
+    checked = 0
     for A in assets:
         for B, rAB in edges.get(A, {}).items():
             for C, rBC in edges.get(B, {}).items():
                 rCA = edges.get(C, {}).get(A)
                 if not rCA:
                     continue
+                checked += 1
                 final_amt = rAB * rBC * rCA
                 profit_pct = (final_amt - 1.0) * 100.0
                 if profit_pct >= min_profit_pct:
                     res.append((profit_pct, A, B, C, final_amt))
+    print(f"triangles_found={len(res)}")
+    print(f"triangles_checked={checked} triangles_kept={len(res)}")
     res.sort(reverse=True, key=lambda x: x[0])
+    
+
     return res
 
 def main():
